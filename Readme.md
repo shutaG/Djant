@@ -2,8 +2,8 @@
       Djant
      </h1> </center>  
 
-<center> Djant 是一款基于vue和drf的auth权限管理系统 </center>
-
+<center> Djant 是一款用vue和drf实现auth权限管理系统 </center>
+<center> 基于ANTD PRO VUE 与 Django REST framework </center>
 
 > 注意事项：
 > 1. 使用pymysql需要修改以下内容

@@ -1,6 +1,7 @@
 // eslint-disable-next-line
 import { UserLayout, BasicLayout, BlankLayout } from '@/layouts'
 import { bxAnaalyse } from '@/core/icons'
+// import { PageView } from '@ant-design-vue/pro-layout'
 
 const RouteView = {
   name: 'RouteView',
@@ -172,6 +173,12 @@ export const asyncRouterMap = [
             name: 'ResultFail',
             component: () => import(/* webpackChunkName: "result" */ '@/views/result/Error'),
             meta: { title: '失败', keepAlive: false, hiddenHeaderContent: true, permission: [ 'result' ] }
+          },
+          {
+            path: '/other/list/permission-list',
+            name: 'PermissionList',
+            component: () => import('@/views/other/PermissionList'),
+            meta: { title: '权限列表', keepAlive: true }
           }
         ]
       },
@@ -256,31 +263,71 @@ export const asyncRouterMap = [
                 name: 'NotificationSettings',
                 component: () => import('@/views/account/settings/Notification'),
                 meta: { title: '新消息通知', hidden: true, keepAlive: true, permission: [ 'user' ] }
+              },
+              {
+                path: '/other/list/user-list',
+                name: 'UserList',
+                component: () => import('@/views/other/UserList'),
+                meta: { title: '用户列表', keepAlive: true }
               }
             ]
           }
         ]
-      }
+      },
+
+      // 权限管理
+      {
+        path: '/auth',
+        name: 'Auth',
+        component: RouteView,
+        redirect: '/auth',
+        meta: { title: '权限管理', icon: 'warning', permission: [ 'exception' ] },
+        children: [
+          {
+            path: '/auth/user',
+            name: 'AuthUser',
+            component: () => import(/* webpackChunkName: "fail" */ '@/views/other/UserList'),
+            meta: { title: '用户管理', permission: [ 'exception' ] }
+          },
+          {
+            path: '/auth/group',
+            name: 'AuthGroup',
+            component: () => import(/* webpackChunkName: "fail" */ '@/views/other/RoleList'),
+            meta: { title: '角色管理', permission: [ 'exception' ] }
+          },
+          {
+            path: '/auth/menu',
+            name: 'AuthMenu',
+            component: () => import(/* webpackChunkName: "fail" */ '@/views/other/TreeList'),
+            meta: { title: '菜单及权限管理', permission: [ 'exception' ] }
+          },
+          {
+            path: '/auth/permission',
+            name: 'AuthPermission',
+            component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/500'),
+            meta: { title: '权限列表', permission: [ 'exception' ] }
+          }
+        ]
+      },
 
       // other
-      /*
       {
         path: '/other',
         name: 'otherPage',
-        component: PageView,
-        meta: { title: '其他组件', icon: 'slack', permission: [ 'dashboard' ] },
+        component: RouteView,
+        meta: { title: '其他组件', icon: 'slack', permission: [ 'user' ] },
         redirect: '/other/icon-selector',
         children: [
           {
             path: '/other/icon-selector',
             name: 'TestIconSelect',
             component: () => import('@/views/other/IconSelectorView'),
-            meta: { title: 'IconSelector', icon: 'tool', keepAlive: true, permission: [ 'dashboard' ] }
+            meta: { title: 'IconSelector', icon: 'tool', keepAlive: true, permission: [ 'user' ] }
           },
           {
             path: '/other/list',
             component: RouteView,
-            meta: { title: '业务布局', icon: 'layout', permission: [ 'support' ] },
+            meta: { title: '业务布局', icon: 'layout', permission: [ 'user' ] },
             redirect: '/other/list/tree-list',
             children: [
               {
@@ -312,18 +359,12 @@ export const asyncRouterMap = [
                 name: 'SystemRole',
                 component: () => import('@/views/role/RoleList'),
                 meta: { title: '角色列表2', keepAlive: true }
-              },
-              {
-                path: '/other/list/permission-list',
-                name: 'PermissionList',
-                component: () => import('@/views/other/PermissionList'),
-                meta: { title: '权限列表', keepAlive: true }
               }
             ]
           }
         ]
       }
-      */
+
     ]
   },
   {

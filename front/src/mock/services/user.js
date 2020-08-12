@@ -752,9 +752,11 @@ const userNav = (options) => {
     }
   ]
   const json = builder(nav)
-  console.log('json', json)
+  console.log(nav)
+  console.log('json用户信息', json)
+  console.log(json)
   return json
 }
 
 Mock.mock(/\/api\/user\/info/, 'get', info)
-Mock.mock(/\/api\/user\/nav/, 'get', userNav)
+Mock.mock(/\/api\/user\/nav111/, 'get', userNav)

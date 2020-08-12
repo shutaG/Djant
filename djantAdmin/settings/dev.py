@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'menuAuth'
+    'menuAuth',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -89,7 +90,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'root',
         'OPTIONS': {
-            'init_command': 'SET storage_engine=INNODB',
+            'init_command': 'SET default_storage_engine=INNODB',
         },
     }
 }

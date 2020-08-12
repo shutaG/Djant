@@ -17,6 +17,7 @@ const permission = {
   },
   actions: {
     GenerateRoutes ({ commit }, data) {
+      console.log(2)
       return new Promise(resolve => {
         const { token } = data
         generatorDynamicRouter(token).then(routers => {
@@ -27,5 +28,4 @@ const permission = {
     }
   }
 }
-
 export default permission

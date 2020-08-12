@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from menuAuth.views import Nav
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/admin/nav/',Nav.as_view())
 ]

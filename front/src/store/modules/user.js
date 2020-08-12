@@ -49,6 +49,7 @@ const user = {
 
     // 获取用户信息
     GetInfo ({ commit }) {
+      console.log('获取用户信息前')
       return new Promise((resolve, reject) => {
         getInfo().then(response => {
           const result = response.result
@@ -71,7 +72,7 @@ const user = {
 
           commit('SET_NAME', { name: result.name, welcome: welcome() })
           commit('SET_AVATAR', result.avatar)
-
+          console.log('获取用户信息后')
           resolve(response)
         }).catch(error => {
           reject(error)

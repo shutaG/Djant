@@ -2,7 +2,6 @@
 import * as loginService from '@/api/login'
 // eslint-disable-next-line
 import { BasicLayout, BlankLayout, PageView, RouteView } from '@/layouts'
-
 // 前端路由表
 const constantRouterComponents = {
   // 基础页面 layout 必须引入
@@ -50,9 +49,11 @@ const constantRouterComponents = {
   'SecuritySettings': () => import('@/views/account/settings/Security'),
   'CustomSettings': () => import('@/views/account/settings/Custom'),
   'BindingSettings': () => import('@/views/account/settings/Binding'),
-  'NotificationSettings': () => import('@/views/account/settings/Notification')
-
+  'NotificationSettings': () => import('@/views/account/settings/Notification'),
+  // other
+  'PermissionList': () => import('@/views/other/PermissionList'),
   // 'TestWork': () => import(/* webpackChunkName: "TestWork" */ '@/views/dashboard/TestWork')
+  'AuthMenu': () => import('@/views/other/TreeList')
 }
 
 // 前端未找到页面路由（固定不用改）
@@ -79,9 +80,11 @@ const rootRouter = {
  * @returns {Promise<Router>}
  */
 export const generatorDynamicRouter = (token) => {
+  console.log('进入菜单请求')
   return new Promise((resolve, reject) => {
     loginService.getCurrentUserNav(token).then(res => {
-      console.log('res', res)
+      console.log('res2', res)
+      // res = res
       const { result } = res
       const menuNav = []
       const childrenNav = []
