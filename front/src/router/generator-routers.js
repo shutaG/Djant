@@ -2,26 +2,15 @@
 import * as loginService from '@/api/login'
 // eslint-disable-next-line
 import { BasicLayout, BlankLayout, PageView, RouteView } from '@/layouts'
-// 前端路由表
-const constantRouterComponents = {
-  // 基础页面 layout 必须引入
-  BasicLayout: BasicLayout,
-  BlankLayout: BlankLayout,
-  RouteView: RouteView,
-  PageView: PageView,
-  '403': () => import(/* webpackChunkName: "error" */ '@/views/exception/403'),
-  '404': () => import(/* webpackChunkName: "error" */ '@/views/exception/404'),
-  '500': () => import(/* webpackChunkName: "error" */ '@/views/exception/500'),
 
+export const userComponents = {
   // 你需要动态引入的页面组件
   'Workplace': () => import('@/views/dashboard/Workplace'),
   'Analysis': () => import('@/views/dashboard/Analysis'),
-
   // form
   'BasicForm': () => import('@/views/form/basicForm'),
   'StepForm': () => import('@/views/form/stepForm/StepForm'),
   'AdvanceForm': () => import('@/views/form/advancedForm/AdvancedForm'),
-
   // list
   'TableList': () => import('@/views/list/TableList'),
   'StandardList': () => import('@/views/list/BasicList'),
@@ -53,8 +42,21 @@ const constantRouterComponents = {
   // other
   'PermissionList': () => import('@/views/other/PermissionList'),
   // 'TestWork': () => import(/* webpackChunkName: "TestWork" */ '@/views/dashboard/TestWork')
-  'AuthMenu': () => import('@/views/other/TreeList')
+  'AuthMenu': () => import('@/views/auth/MenuList')
 }
+
+const sysCpmponents = {
+  BasicLayout: BasicLayout,
+  BlankLayout: BlankLayout,
+  RouteView: RouteView,
+  PageView: PageView,
+  '403': () => import(/* webpackChunkName: "error" */ '@/views/exception/403'),
+  '404': () => import(/* webpackChunkName: "error" */ '@/views/exception/404'),
+  '500': () => import(/* webpackChunkName: "error" */ '@/views/exception/500')
+}
+
+// 前端路由表
+const constantRouterComponents = Object.assign(sysCpmponents, userComponents)
 
 // 前端未找到页面路由（固定不用改）
 const notFoundRouter = {

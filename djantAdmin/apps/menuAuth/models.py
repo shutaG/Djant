@@ -27,11 +27,11 @@ class User(AbstractUser):
 class Menu(models.Model):
     name = models.CharField('名称', max_length=20)
     pid = models.ForeignKey("self", default=0, on_delete=models.DO_NOTHING)
-    type = models.CharField(choices=[('menu', '菜单'), ('页内链接', 'button'), ], default='menu', max_length=10)
+    type = models.CharField(choices=[('menu', '菜单'), ('permission', '权限'), ], default='menu', max_length=10)
     icon = models.CharField(max_length=50, null=True, default=None)
     path = models.CharField(max_length=50, null=True, default=None)
     premission = models.ForeignKey(Permission, null=True, default=None,on_delete=models.DO_NOTHING)
-    statu = models.CharField(max_length=50, null=True, default=None)
+    statu = models.CharField(choices=[('hidden', '隐藏'), ('show', '显示'), ], default='show', max_length=10)
     group = models.ManyToManyField(Group,null=True, default=None)
 
 

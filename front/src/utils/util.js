@@ -65,3 +65,24 @@ export function removeLoadingAnimate (id = '', timeout = 1500) {
     document.body.removeChild(document.getElementById(id))
   }, timeout)
 }
+
+export const listToTree = (list, tree, parentId) => {
+  list.forEach(item => {
+	// 判断是否为父级菜单
+  if (item.parentId === parentId) {
+    const child = {
+    ...item,
+    key: item.key || item.name,
+    children: []
+    }
+    // 迭代 list， 找到当前菜单相符合的所有子菜单
+    listToTree(list, child.children, item.id)
+    // 删掉不存在 children 值的属性
+    if (child.children.length <= 0) {
+      delete child.children
+    }
+    // 加入到树中
+    tree.push(child)
+	}
+  })
+}
