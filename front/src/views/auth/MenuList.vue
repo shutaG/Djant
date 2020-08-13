@@ -1,8 +1,14 @@
 <template>
   <a-card :bordered="false">
-    <div>
-      <a-button class="create" type="primary" icon="plus" @click="formVisible = true">添加</a-button>
+    <div class="create">
+      <a-button
+        class="btn"
+        @click="addMenu"
+        type="primary"
+        icon="plus">添加</a-button>
     </div>
+
+    <!-- <div @click="addMenu">11112</div> -->
     <a-table :rowKey="(record) => record.id" :columns="menuColumns" :data-source="menuTree" >
       <template slot="icon" slot-scope="row">
         <a-icon :type="row.meta.icon" v-if="row.meta.icon"/> {{ row.meta.icon }}
@@ -28,6 +34,7 @@
     <create-menu
       ref="createMenu"
       :visible="formVisible"
+      :pMenu="pMenu"
       @createOk="submit"
       @createCancel="close"
     ></create-menu>
@@ -41,8 +48,8 @@ import OrgModal from './modules/OrgModal'
 import { getOrgTree, getServiceList } from '@/api/manage'
 import { createMenuApi, updateMenuApi } from '@/api/auth/menu'
 import { getCurrentUserNav } from '@/api/login'
-import { listToTree } from '@/utils/util'
 import CreateMenu from './modules/CreateMenu'
+import { getOnlyMenuApi } from '@/api/auth/menu.js'
 
 export default {
   name: 'TreeList',
@@ -98,7 +105,8 @@ export default {
       selectedRowKeys: [],
       selectedRows: [],
       formVisible: true,
-      editMenuId: null
+      editMenuId: null,
+      pMenu: []
     }
   },
   created () {
@@ -108,12 +116,45 @@ export default {
     getCurrentUserNav().then(res => {
       console.log('tree', res)
       const menu = []
-      listToTree(res.result, menu, 0)
+      this.treeToList(res.result, menu, 0)
       console.log('menu', menu)
       this.menuTree = menu
     })
   },
   methods: {
+    // 获取菜单列表
+    getMenu () {
+      getOnlyMenuApi().then(res => {
+        console.log(res)
+        this.pMenu = this.treeToList(res)
+      })
+    },
+
+    treeToList (menu, pid = null, re = [], cha = '|-') {
+      console.log('pid', pid)
+      for (var item in menu) {
+        console.log('item1', menu[item])
+        if (menu[item].pid === pid) {
+           console.log('item2', menu[item])
+           console.log(menu[item].id)
+           var re2 = {
+             id: menu[item].id,
+             title: cha + menu[item].title
+           }
+           re.push(re2)
+           re = this.treeToList(menu, menu[item].id, re, cha + '--')
+        }
+      }
+      console.log('re', re)
+      return re
+    },
+
+    // 将菜单转为列表
+
+    addMenu () {
+      this.getMenu()
+      this.formVisible = true
+    },
     submit () {
       console.log('submit')
       this.$refs.createMenu.form.validateFields((err, values) => {
@@ -189,45 +230,48 @@ export default {
 
 <style lang="less">
   .create{
-    float:right;
-    margin:10px;
+    position: relative;
+    height:50px;
+    .btn{
+      float: right;
+    }
   }
   .btn-edit{
     margin-right: 10px;
   }
   .custom-tree {
 
-    /deep/ .ant-menu-item-group-title {
-      position: relative;
-      &:hover {
-        .btn {
-          display: block;
-        }
-      }
-    }
+    // /deep/ .ant-menu-item-group-title {
+    //   position: relative;
+    //   &:hover {
+    //     .btn {
+    //       display: block;
+    //     }
+    //   }
+    // }
 
-    /deep/ .ant-menu-item {
-      &:hover {
-        .btn {
-          display: block;
-        }
-      }
-    }
+    // /deep/ .ant-menu-item {
+    //   &:hover {
+    //     .btn {
+    //       display: block;
+    //     }
+    //   }
+    // }
 
-    /deep/ .btn {
-      display: none;
-      position: absolute;
-      top: 0;
-      right: 10px;
-      width: 20px;
-      height: 40px;
-      line-height: 40px;
-      z-index: 1050;
+    // /deep/ .btn {
+    //   display: none;
+    //   position: absolute;
+    //   top: 0;
+    //   right: 10px;
+    //   width: 20px;
+    //   height: 40px;
+    //   line-height: 40px;
+    //   z-index: 1050;
 
-      &:hover {
-        transform: scale(1.2);
-        transition: 0.5s all;
-      }
-    }
+    //   &:hover {
+    //     transform: scale(1.2);
+    //     transition: 0.5s all;
+    //   }
+    // }
   }
 </style>

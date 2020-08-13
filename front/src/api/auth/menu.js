@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 const api = {
-  menu: '/user/menu/'
+  menu: '/admin/menu/'
 }
 
 export function createMenuApi (data) {
@@ -14,8 +14,19 @@ export function createMenuApi (data) {
 
 export function updateMenuApi (id, data) {
   return request({
-    url: api.menu + id + '/',
-    method: 'put',
+    url: api.menu + '/' + id + '/',
+    method: 'post',
     data: data
+  })
+}
+
+// 筛选type=menu的菜单
+export function getOnlyMenuApi () {
+  return request({
+    url: api.menu,
+    method: 'get',
+    params: {
+      type: 'menu'
+    }
   })
 }

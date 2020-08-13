@@ -1,9 +1,10 @@
-from rest_framework import viewsets
-# Create your views here.
-from rest_framework.views import APIView
-from django.http import HttpResponse
+# from rest_framework import viewsets
+from rest_framework import views,viewsets
 from rest_framework.response import Response
-class Nav(APIView):
+from menuAuth import serializer
+from menuAuth import models
+
+class Nav(views.APIView):
     true = True
     false = False
     nav = [{
@@ -132,10 +133,12 @@ class Nav(APIView):
 
         return Response(data)
 
-
+from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
 # 菜单管理
-class Menu(APIView):
-    def get(self,request):
-        pass
-
-    def
+class Menu(viewsets.ModelViewSet):
+    queryset = models.Menu.objects.all()
+    serializer_class = serializer.MenuSerializer
+    filter_fields = ('type',)
+    filter_backends = [filters.OrderingFilter,DjangoFilterBackend]
+    ordering_fields = ('id')

@@ -17,6 +17,24 @@
             v-decorator="['title', { rules: [{ required: true, message: '您还未填写标题' }] }]"
           />
         </a-form-item>
+        <a-form-item label="访问路径">
+          <a-input
+            v-decorator="['path', { rules: [{ required: true, message: '您还未填写访问路径' }] }]"
+          />
+        </a-form-item>
+        <a-form-item label="父级菜单">
+          <a-select
+            v-decorator="[
+              'pid',
+              { rules: [{ required: true, message: '添加菜单时，必须选择父级菜单' }] },
+            ]"
+            placeholder="选择父级菜单"
+          >
+            <a-select-option v-for="item in pMenu" :key="item.id">
+              {{ item.title }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
         <a-form-item label="组件">
           <a-select
             v-decorator="[
@@ -31,9 +49,17 @@
           </a-select>
         </a-form-item>
         <a-form-item label="是否显示">
-          <a-switch default-checked checked-children="显示" un-checked-children="隐藏"/>
+          <a-switch
+            default-checked
+            checked-children="显示"
+            un-checked-children="隐藏"
+            v-decorator="['statu', { rules: [{ required: false, message: 'Please input your note!' }] }]"
+          />
         </a-form-item>
-        <a-form-item label="图标代号" :wrapper-col="{ span: 5, }">
+        <a-form-item
+          label="
+            图标代号"
+          :wrapper-col="{ span: 5, }">
           <a-row :gutter="1">
             <a-col :span="24">
               <a-input
@@ -42,7 +68,7 @@
             </a-col>
             <a-col :span="0"></a-col>
           </a-row>
-        </a-form-item>
+          </a-switch></a-form-item>
       </a-form>
     </a-modal>
 
@@ -58,7 +84,13 @@ export default {
   props: {
     visible: {
       type: Boolean,
-      default: false
+      default: true
+    },
+    pMenu: {
+      type: Array,
+      default: () => {
+        return []
+      }
     }
   },
   data () {
@@ -68,18 +100,23 @@ export default {
       userComponents: userComponents
     }
   },
+  created () {
+     this.getComponents()
+  },
   methods: {
+    // 对模板列表进行排序
+    getComponents () {
+      let arr = Object.keys(userComponents)
+      arr = Array.from(new	Set(arr))
+      arr = arr.sort()
+      this.userComponents = arr
+    },
 
     handleSubmit () {
       console.log('submit!', this.form)
     }
-  },
-  created () {
-    let arr = Object.keys(userComponents)
-    arr = Array.from(new	Set(arr))
-    arr = arr.sort()
-    this.userComponents = arr
   }
+
 }
 </script>
 

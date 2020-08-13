@@ -15,9 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from menuAuth.views import Nav
+from menuAuth.views import Nav,Menu
+from rest_framework.routers import DefaultRouter,SimpleRouter
+
+router = SimpleRouter()
+router.register('api/admin/menu',Menu)
+
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/admin/nav/',Nav.as_view()),
-    path('api/admin/nav/',Nav.as_view())
+    path('api/admin/nav/',Nav.as_view()),
+
 ]
+
+urlpatterns += router.urls
