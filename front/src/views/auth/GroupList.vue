@@ -42,16 +42,21 @@
 </template>
 
 <script>
+import STree from '@/components/Tree/Tree'
+import { STable } from '@/components'
+import OrgModal from './modules/OrgModal'
 import { getOrgTree, getServiceList } from '@/api/manage'
 import { createMenuApi, updateMenuApi } from '@/api/auth/menu'
 import { getCurrentUserNav } from '@/api/login'
 import CreateMenu from './modules/CreateMenu'
 import { getOnlyMenuApi } from '@/api/auth/menu.js'
-import { listToTree } from '@/utils/util.js'
 
 export default {
   name: 'TreeList',
   components: {
+    STable,
+    STree,
+    OrgModal,
     CreateMenu
   },
   data () {
@@ -99,7 +104,7 @@ export default {
       orgTree: [],
       selectedRowKeys: [],
       selectedRows: [],
-      formVisible: false,
+      formVisible: true,
       editMenuId: null,
       pMenu: []
     }
@@ -111,7 +116,7 @@ export default {
     getCurrentUserNav().then(res => {
       console.log('tree', res)
       const menu = []
-      listToTree(res.result, menu, 0)
+      this.treeToList(res.result, menu, 0)
       console.log('menu', menu)
       this.menuTree = menu
     })
@@ -124,7 +129,7 @@ export default {
         this.pMenu = this.treeToList(res)
       })
     },
-    // 将后台获取到的树转为list
+
     treeToList (menu, pid = null, re = [], cha = '|-') {
       console.log('pid', pid)
       for (var item in menu) {

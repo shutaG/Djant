@@ -34,11 +34,11 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # 账号
-QINIU_AK= 'V7AFszQpnDwpXcY4IF66c3zKrlSsSvOWgfwjfyn3'
+QINIU_AK= ''
 # 密码
-QINIU_SK = 'KVjBCSDnHG4ulK7R9aOzftWanFzxLQSGrBtq_xb7'
+QINIU_SK = ''
 # 图片的访问域名
-QINIU_DOMAIN = 'http://qf1zf1f9u.hn-bkt.clouddn.com'
+QINIU_DOMAIN = ''
 
 # Application definition
 

@@ -42,7 +42,10 @@ export const userComponents = {
   // other
   'PermissionList': () => import('@/views/other/PermissionList'),
   // 'TestWork': () => import(/* webpackChunkName: "TestWork" */ '@/views/dashboard/TestWork')
-  'AuthMenu': () => import('@/views/auth/MenuList')
+  'AuthMenu': () => import('@/views/auth/MenuList'),
+  'AuthGroup': () => import('@/views/auth/GroupList'),
+  'AuthUser': () => import('@/views/auth/UserList2'),
+  'AuthUser2': () => import('@/views/auth/UserList')
 }
 
 const sysCpmponents = {

@@ -102,6 +102,7 @@ class Nav(views.APIView):
         'component': 'PageView',
         'redirect': '/'
     },
+
     {
       'name': 'authMenu',
       'parentId': 100,
@@ -112,6 +113,28 @@ class Nav(views.APIView):
         'type': 'menu'
       },
       'component': 'AuthMenu'
+    },
+    {
+      'name': 'authUser',
+      'parentId': 100,
+      'id': 1001,
+      'meta': {
+        'title': '用户管理',
+        'statu': 'show',
+        'type': 'menu'
+      },
+      'component': 'AuthUser'
+    },
+    {
+      'name': 'authGroup',
+      'parentId': 100,
+      'id': 1001,
+      'meta': {
+        'title': '角色管理',
+        'statu': 'show',
+        'type': 'menu'
+      },
+      'component': 'AuthGroup'
     },
     {
         'name': 'authMenu2',
@@ -142,3 +165,8 @@ class Menu(viewsets.ModelViewSet):
     filter_fields = ('type',)
     filter_backends = [filters.OrderingFilter,DjangoFilterBackend]
     ordering_fields = ('id')
+
+
+class User(viewsets.ModelViewSet):
+    queryset = models.User.objects.all()
+    serializer_class = serializer.UserSerializer
